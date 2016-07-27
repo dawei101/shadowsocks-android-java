@@ -21,7 +21,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tcpip/TCPHeader.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tcpip/UDPHeader.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/Config.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/IEncryptor.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/RawTunnel.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/Tunnel.java" charset="GB2312" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/httpconnect/HttpConnectConfig.java" charset="GB2312" />
