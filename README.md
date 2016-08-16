@@ -1,6 +1,6 @@
 # shadowsocks-android-java
 
-Last release: [Download](https://github.com/dawei101/shadowsocks-android-java/raw/v1.0/app/shadowsocks-vpnmore.apk)
+Last release: [Download](https://github.com/dawei101/shadowsocks-android-java/releases/download/1.0/shadowsocks-vpnmore1.0.apk)
 
 sha1 hash: 8cf9fde49f2f5b875d4bfd0968dec04bb788d326
 
