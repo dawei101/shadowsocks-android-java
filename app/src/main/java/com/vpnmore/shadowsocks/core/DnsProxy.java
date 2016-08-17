@@ -172,7 +172,7 @@ public class DnsProxy implements Runnable {
 		}
 		
 		if (state != null) {
-			//DNSÎÛÈ¾£¬Ä¬ÈÏÎÛÈ¾º£ÍâÍøÕ¾
+			//DNSæ±¡æŸ“ï¼Œé»˜è®¤æ±¡æŸ“æµ·å¤–ç½‘ç«™
 			dnsPollution(udpHeader.m_Data,dnsPacket);
 			
 			dnsPacket.Header.setID(state.ClientQueryID);
@@ -236,7 +236,7 @@ public class DnsProxy implements Runnable {
 	
 	public void onDnsRequestReceived(IPHeader ipHeader,UDPHeader udpHeader,DnsPacket dnsPacket){
 		if(!interceptDns(ipHeader,udpHeader,dnsPacket)){
-		    //×ª·¢DNS
+		    //è½¬å‘DNS
 			QueryState state = new QueryState();
 			state.ClientQueryID =dnsPacket.Header.ID;
 			state.QueryNanoTime = System.nanoTime();
@@ -245,13 +245,13 @@ public class DnsProxy implements Runnable {
 			state.RemoteIP = ipHeader.getDestinationIP();
 			state.RemotePort = udpHeader.getDestinationPort();
 
-			// ×ª»»QueryID
-			m_QueryID++;// Ôö¼ÓID
+			// è½¬æ¢QueryID
+			m_QueryID++;// å¢åŠ ID
 			dnsPacket.Header.setID(m_QueryID);
 			
 			synchronized (m_QueryArray) {
-				clearExpiredQueries();//Çå¿Õ¹ıÆÚµÄ²éÑ¯£¬¼õÉÙÄÚ´æ¿ªÏú¡£
-				m_QueryArray.put(m_QueryID, state);// ¹ØÁªÊı¾İ
+				clearExpiredQueries();//æ¸…ç©ºè¿‡æœŸçš„æŸ¥è¯¢ï¼Œå‡å°‘å†…å­˜å¼€é”€ã€‚
+				m_QueryArray.put(m_QueryID, state);// å…³è”æ•°æ®
 			}
 			
 			InetSocketAddress remoteAddress = new InetSocketAddress(CommonMethods.ipIntToInet4Address(state.RemoteIP ), state.RemotePort);

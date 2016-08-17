@@ -28,8 +28,8 @@ public class HttpConnectTunnel extends Tunnel {
 		buffer.clear();
 		buffer.put(request.getBytes());
 		buffer.flip();
-		if(this.write(buffer,true)){//·¢ËÍÁ¬½ÓÇëÇóµ½´úÀí·şÎñÆ÷
-			this.beginReceive();//¿ªÊ¼½ÓÊÕ´úÀí·şÎñÆ÷ÏìÓ¦Êı¾İ
+		if(this.write(buffer,true)){//å‘é€è¿æ¥è¯·æ±‚åˆ°ä»£ç†æœåŠ¡å™¨
+			this.beginReceive();//å¼€å§‹æ¥æ”¶ä»£ç†æœåŠ¡å™¨å“åº”æ•°æ®
 		}
 	}
 
@@ -54,15 +54,15 @@ public class HttpConnectTunnel extends Tunnel {
 	@Override
 	protected void beforeSend(ByteBuffer buffer) throws Exception {
 		if(ProxyConfig.Instance.isIsolateHttpHostHeader()){
-    		trySendPartOfHeader(buffer);//³¢ÊÔ·¢ËÍÇëÇóÍ·µÄÒ»²¿·Ö£¬ÈÃÇëÇóÍ·µÄhostÔÚµÚ¶ş¸ö°üÀïÃæ·¢ËÍ£¬´Ó¶øÈÆ¹ı»ú·¿µÄ°×Ãûµ¥»úÖÆ¡£
+    		trySendPartOfHeader(buffer);//å°è¯•å‘é€è¯·æ±‚å¤´çš„ä¸€éƒ¨åˆ†ï¼Œè®©è¯·æ±‚å¤´çš„hoståœ¨ç¬¬äºŒä¸ªåŒ…é‡Œé¢å‘é€ï¼Œä»è€Œç»•è¿‡æœºæˆ¿çš„ç™½åå•æœºåˆ¶ã€‚
     	}
 	}
 
 	@Override
 	protected void afterReceived(ByteBuffer buffer) throws Exception {
 		if(!m_TunnelEstablished){
-			//ÊÕµ½´úÀí·şÎñÆ÷ÏìÓ¦Êı¾İ
-			//·ÖÎöÏìÓ¦²¢ÅĞ¶ÏÊÇ·ñÁ¬½Ó³É¹¦
+			//æ”¶åˆ°ä»£ç†æœåŠ¡å™¨å“åº”æ•°æ®
+			//åˆ†æå“åº”å¹¶åˆ¤æ–­æ˜¯å¦è¿æ¥æˆåŠŸ
 			String response=new String(buffer.array(),buffer.position(),12);
 			if(response.matches("^HTTP/1.[01] 200$")){
 				buffer.limit(buffer.position());

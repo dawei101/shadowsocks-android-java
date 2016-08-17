@@ -10,15 +10,15 @@ public class TCPHeader {
 	public static final int ACK = 16;
 	public static final int URG = 32;
 			 
-	static final short offset_src_port = 0; // 16Î»Ô´¶Ë¿Ú
-	static final short offset_dest_port = 2; // 16Î»Ä¿µÄ¶Ë¿Ú
-	static final int offset_seq = 4; // 32Î»ĞòÁĞºÅ
-	static final int offset_ack = 8; // 32Î»È·ÈÏºÅ
-	static final byte offset_lenres = 12; // 4Î»Ê×²¿³¤¶È/4Î»±£Áô×Ö
-	static final byte offset_flag = 13; // 6Î»±êÖ¾Î»
-	static final short offset_win = 14; // 16Î»´°¿Ú´óĞ¡
-	static final short offset_crc = 16; // 16Î»Ğ£ÑéºÍ
-	static final short offset_urp = 18; // 16Î»½ô¼±Êı¾İÆ«ÒÆÁ¿
+	static final short offset_src_port = 0; // 16ä½æºç«¯å£
+	static final short offset_dest_port = 2; // 16ä½ç›®çš„ç«¯å£
+	static final int offset_seq = 4; // 32ä½åºåˆ—å·
+	static final int offset_ack = 8; // 32ä½ç¡®è®¤å·
+	static final byte offset_lenres = 12; // 4ä½é¦–éƒ¨é•¿åº¦/4ä½ä¿ç•™å­—
+	static final byte offset_flag = 13; // 6ä½æ ‡å¿—ä½
+	static final short offset_win = 14; // 16ä½çª—å£å¤§å°
+	static final short offset_crc = 16; // 16ä½æ ¡éªŒå’Œ
+	static final short offset_urp = 18; // 16ä½ç´§æ€¥æ•°æ®åç§»é‡
 
 	public byte[] m_Data;
 	public int m_Offset;

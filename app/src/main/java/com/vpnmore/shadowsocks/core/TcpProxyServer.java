@@ -118,9 +118,9 @@ public class TcpProxyServer implements Runnable {
 			InetSocketAddress destAddress=getDestAddress(localChannel);
 			if(destAddress!=null){
 				Tunnel remoteTunnel=TunnelFactory.createTunnelByConfig(destAddress,m_Selector);
-				remoteTunnel.setBrotherTunnel(localTunnel);//¹ØÁªĞÖµÜ
-				localTunnel.setBrotherTunnel(remoteTunnel);//¹ØÁªĞÖµÜ
-				remoteTunnel.connect(destAddress);//¿ªÊ¼Á¬½Ó
+				remoteTunnel.setBrotherTunnel(localTunnel);//å…³è”å…„å¼Ÿ
+				localTunnel.setBrotherTunnel(remoteTunnel);//å…³è”å…„å¼Ÿ
+				remoteTunnel.connect(destAddress);//å¼€å§‹è¿æ¥
 			}
 			else {
 				LocalVpnService.Instance.writeLog("Error: socket(%s:%d) target host is null.",localChannel.socket().getInetAddress().toString(),localChannel.socket().getPort());

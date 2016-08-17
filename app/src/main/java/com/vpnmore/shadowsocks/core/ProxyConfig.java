@@ -38,7 +38,7 @@ public class ProxyConfig {
     ArrayList<IPAddress> m_IpList;
     ArrayList<IPAddress> m_DnsList;
     ArrayList<IPAddress> m_RouteList;
-    ArrayList<Config> m_ProxyList;
+    public ArrayList<Config> m_ProxyList;
     HashMap<String, Boolean> m_DomainMap;
     
     int m_dns_ttl;
@@ -94,16 +94,16 @@ public class ProxyConfig {
     	m_DomainMap=new HashMap<String, Boolean>();
 
     	m_Timer=new Timer();
-    	m_Timer.schedule(m_Task, 120000, 120000);//Ã¿Á½·ÖÖÓË¢ĞÂÒ»´Î¡£
+    	m_Timer.schedule(m_Task, 120000, 120000);//æ¯ä¸¤åˆ†é’Ÿåˆ·æ–°ä¸€æ¬¡ã€‚
     }
     
     TimerTask m_Task=new TimerTask() {
 		@Override
 		public void run() {
-			refreshProxyServer();//¶¨Ê±¸üĞÂdns»º´æ
+			refreshProxyServer();//å®šæ—¶æ›´æ–°dnsç¼“å­˜
 		}
 		
-		//¶¨Ê±¸üĞÂdns»º´æ
+		//å®šæ—¶æ›´æ–°dnsç¼“å­˜
 		void refreshProxyServer(){
 			try {
 				for (int i = 0; i <m_ProxyList.size(); i++) {
@@ -344,7 +344,7 @@ public class ProxyConfig {
 			
 		}
         
-        //²éÕÒÄ¬ÈÏ´úÀí¡£
+        //æŸ¥æ‰¾é»˜è®¤ä»£ç†ã€‚
         if(m_ProxyList.size()==0){
         	tryAddProxy(lines);
         }

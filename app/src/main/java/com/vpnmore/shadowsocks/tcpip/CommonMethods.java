@@ -60,7 +60,7 @@ public class CommonMethods {
 		data[offset + 1] = (byte) (value);
 	}
 
-	// ÍøÂç×Ö½ÚË³ĞòÓëÖ÷»ú×Ö½ÚË³ĞòµÄ×ª»»
+	// ç½‘ç»œå­—èŠ‚é¡ºåºä¸ä¸»æœºå­—èŠ‚é¡ºåºçš„è½¬æ¢
 
 	public static short htons(short u) {
 		int r = ((u & 0xFFFF) << 8) | ((u & 0xFFFF) >> 8);
@@ -88,7 +88,7 @@ public class CommonMethods {
 		return r;
 	}
 
-	// ¼ÆËãĞ£ÑéºÍ
+	// è®¡ç®—æ ¡éªŒå’Œ
 	public static short checksum(long sum, byte[] buf, int offset, int len) {
 		sum += getsum(buf, offset, len);
 		while ((sum >> 16) > 0)
@@ -111,53 +111,53 @@ public class CommonMethods {
 		return sum;
 	}
 
-	// ¼ÆËãIP°üµÄĞ£ÑéºÍ
+	// è®¡ç®—IPåŒ…çš„æ ¡éªŒå’Œ
 	public static boolean ComputeIPChecksum(IPHeader ipHeader) {
 		short oldCrc = ipHeader.getCrc();
-		ipHeader.setCrc((short) 0);// ¼ÆËãÇ°ÖÃÁã
+		ipHeader.setCrc((short) 0);// è®¡ç®—å‰ç½®é›¶
 		short newCrc = CommonMethods.checksum(0, ipHeader.m_Data,
 				ipHeader.m_Offset, ipHeader.getHeaderLength());
 		ipHeader.setCrc(newCrc);
 		return oldCrc == newCrc;
 	}
 
-	// ¼ÆËãTCP»òUDPµÄĞ£ÑéºÍ
+	// è®¡ç®—TCPæˆ–UDPçš„æ ¡éªŒå’Œ
 	public static boolean ComputeTCPChecksum(IPHeader ipHeader,TCPHeader tcpHeader) {
-		ComputeIPChecksum(ipHeader);//¼ÆËãIPĞ£ÑéºÍ
-		int ipData_len = ipHeader.getTotalLength() - ipHeader.getHeaderLength();// IPÊı¾İ³¤¶È
+		ComputeIPChecksum(ipHeader);//è®¡ç®—IPæ ¡éªŒå’Œ
+		int ipData_len = ipHeader.getTotalLength() - ipHeader.getHeaderLength();// IPæ•°æ®é•¿åº¦
 		if (ipData_len < 0)
 			return false;
-		// ¼ÆËãÎªÎ±Ê×²¿ºÍ
+		// è®¡ç®—ä¸ºä¼ªé¦–éƒ¨å’Œ
 		long sum = getsum(ipHeader.m_Data, ipHeader.m_Offset
 				+ IPHeader.offset_src_ip, 8);
 		sum += ipHeader.getProtocol()&0xFF;
 		sum += ipData_len;
 
 		short oldCrc = tcpHeader.getCrc();
-		tcpHeader.setCrc((short) 0);// ¼ÆËãÇ°ÖÃ0
+		tcpHeader.setCrc((short) 0);// è®¡ç®—å‰ç½®0
 
-		short newCrc = checksum(sum, tcpHeader.m_Data, tcpHeader.m_Offset, ipData_len);// ¼ÆËãĞ£ÑéºÍ
+		short newCrc = checksum(sum, tcpHeader.m_Data, tcpHeader.m_Offset, ipData_len);// è®¡ç®—æ ¡éªŒå’Œ
 
 		tcpHeader.setCrc(newCrc);
 		return oldCrc == newCrc;
 	}
 
-	// ¼ÆËãTCP»òUDPµÄĞ£ÑéºÍ
+	// è®¡ç®—TCPæˆ–UDPçš„æ ¡éªŒå’Œ
 	public static boolean ComputeUDPChecksum(IPHeader ipHeader,UDPHeader udpHeader) {
-		ComputeIPChecksum(ipHeader);//¼ÆËãIPĞ£ÑéºÍ
-		int ipData_len = ipHeader.getTotalLength() - ipHeader.getHeaderLength();// IPÊı¾İ³¤¶È
+		ComputeIPChecksum(ipHeader);//è®¡ç®—IPæ ¡éªŒå’Œ
+		int ipData_len = ipHeader.getTotalLength() - ipHeader.getHeaderLength();// IPæ•°æ®é•¿åº¦
 		if (ipData_len < 0)
 			return false;
-		// ¼ÆËãÎªÎ±Ê×²¿ºÍ
+		// è®¡ç®—ä¸ºä¼ªé¦–éƒ¨å’Œ
 		long sum = getsum(ipHeader.m_Data, ipHeader.m_Offset
 				+ IPHeader.offset_src_ip, 8);
 		sum += ipHeader.getProtocol()&0xFF;
 		sum += ipData_len;
 
 		short oldCrc = udpHeader.getCrc();
-		udpHeader.setCrc((short) 0);// ¼ÆËãÇ°ÖÃ0
+		udpHeader.setCrc((short) 0);// è®¡ç®—å‰ç½®0
 
-		short newCrc = checksum(sum, udpHeader.m_Data, udpHeader.m_Offset, ipData_len);// ¼ÆËãĞ£ÑéºÍ
+		short newCrc = checksum(sum, udpHeader.m_Data, udpHeader.m_Offset, ipData_len);// è®¡ç®—æ ¡éªŒå’Œ
 
 		udpHeader.setCrc(newCrc);
 		return oldCrc == newCrc;

@@ -51,10 +51,10 @@ public abstract class Tunnel {
 	}
 	
 	public void connect(InetSocketAddress destAddress) throws Exception {
-		if(LocalVpnService.Instance.protect(m_InnerChannel.socket())){//±£»¤socket²»×ßvpn
+		if(LocalVpnService.Instance.protect(m_InnerChannel.socket())){//ä¿æŠ¤socketä¸èµ°vpn
 			m_DestAddress=destAddress;
-			m_InnerChannel.register(m_Selector, SelectionKey.OP_CONNECT,this);//×¢²áÁ¬½ÓÊÂ¼ş
-			m_InnerChannel.connect(m_ServerEP);//Á¬½ÓÄ¿±ê
+			m_InnerChannel.register(m_Selector, SelectionKey.OP_CONNECT,this);//æ³¨å†Œè¿æ¥äº‹ä»¶
+			m_InnerChannel.connect(m_ServerEP);//è¿æ¥ç›®æ ‡
 		}else {
 			throw new Exception("VPN protect socket failed.");
 		}
@@ -64,7 +64,7 @@ public abstract class Tunnel {
 		if(m_InnerChannel.isBlocking()){
 			m_InnerChannel.configureBlocking(false);
 		}
-		m_InnerChannel.register(m_Selector, SelectionKey.OP_READ,this);//×¢²á¶ÁÊÂ¼ş
+		m_InnerChannel.register(m_Selector, SelectionKey.OP_READ,this);//æ³¨å†Œè¯»äº‹ä»¶
 	}
 	
 
@@ -73,39 +73,39 @@ public abstract class Tunnel {
     	while (buffer.hasRemaining()) {
 			bytesSent=m_InnerChannel.write(buffer);
 			if(bytesSent==0){
-				break;//²»ÄÜÔÙ·¢ËÍÁË£¬ÖÕÖ¹Ñ­»·
+				break;//ä¸èƒ½å†å‘é€äº†ï¼Œç»ˆæ­¢å¾ªç¯
 			}
 		}
     	
-    	if(buffer.hasRemaining()){//Êı¾İÃ»ÓĞ·¢ËÍÍê±Ï
-    		if(copyRemainData){//¿½±´Ê£ÓàÊı¾İ£¬È»ºóÕìÌıĞ´ÈëÊÂ¼ş£¬´ı¿ÉĞ´ÈëÊ±Ğ´Èë¡£
-    			//¿½±´Ê£ÓàÊı¾İ
+    	if(buffer.hasRemaining()){//æ•°æ®æ²¡æœ‰å‘é€å®Œæ¯•
+    		if(copyRemainData){//æ‹·è´å‰©ä½™æ•°æ®ï¼Œç„¶åä¾¦å¬å†™å…¥äº‹ä»¶ï¼Œå¾…å¯å†™å…¥æ—¶å†™å…¥ã€‚
+    			//æ‹·è´å‰©ä½™æ•°æ®
     			if(m_SendRemainBuffer==null){
     				m_SendRemainBuffer= ByteBuffer.allocate(buffer.capacity());
     			}
     			m_SendRemainBuffer.clear();
         		m_SendRemainBuffer.put(buffer);
     			m_SendRemainBuffer.flip();
-    			m_InnerChannel.register(m_Selector, SelectionKey.OP_WRITE, this);//×¢²áĞ´ÊÂ¼ş
+    			m_InnerChannel.register(m_Selector, SelectionKey.OP_WRITE, this);//æ³¨å†Œå†™äº‹ä»¶
     		}
 			return false;
     	}
-    	else {//·¢ËÍÍê±ÏÁË
+    	else {//å‘é€å®Œæ¯•äº†
     		return true;
 		}
 	}
  
     protected void onTunnelEstablished() throws Exception {
-		this.beginReceive();//¿ªÊ¼½ÓÊÕÊı¾İ
-		m_BrotherTunnel.beginReceive();//ĞÖµÜÒ²¿ªÊ¼ÊÕÊı¾İ°É
+		this.beginReceive();//å¼€å§‹æ¥æ”¶æ•°æ®
+		m_BrotherTunnel.beginReceive();//å…„å¼Ÿä¹Ÿå¼€å§‹æ”¶æ•°æ®å§
     }
 
     @SuppressLint("DefaultLocale")
 	public void onConnectable(){
     	try {
-        	if(m_InnerChannel.finishConnect()){//Á¬½Ó³É¹¦
-        		onConnected(GL_BUFFER);//Í¨Öª×ÓÀàTCPÒÑÁ¬½Ó£¬×ÓÀà¿ÉÒÔ¸ù¾İĞ­ÒéÊµÏÖÎÕÊÖµÈ¡£
-        	}else {//Á¬½ÓÊ§°Ü
+        	if(m_InnerChannel.finishConnect()){//è¿æ¥æˆåŠŸ
+        		onConnected(GL_BUFFER);//é€šçŸ¥å­ç±»TCPå·²è¿æ¥ï¼Œå­ç±»å¯ä»¥æ ¹æ®åè®®å®ç°æ¡æ‰‹ç­‰ã€‚
+        	}else {//è¿æ¥å¤±è´¥
         		LocalVpnService.Instance.writeLog("Error: connect to %s failed.",m_ServerEP);
 				this.dispose();
 			}
@@ -122,17 +122,17 @@ public abstract class Tunnel {
 			int bytesRead=m_InnerChannel.read(buffer);
 			if(bytesRead>0){
 				buffer.flip();
-				afterReceived(buffer);//ÏÈÈÃ×ÓÀà´¦Àí£¬ÀıÈç½âÃÜÊı¾İ¡£
-				if(isTunnelEstablished()&&buffer.hasRemaining()){//½«¶Áµ½µÄÊı¾İ£¬×ª·¢¸øĞÖµÜ¡£
-					m_BrotherTunnel.beforeSend(buffer);//·¢ËÍÖ®Ç°£¬ÏÈÈÃ×ÓÀà´¦Àí£¬ÀıÈç×ö¼ÓÃÜµÈ¡£
+				afterReceived(buffer);//å…ˆè®©å­ç±»å¤„ç†ï¼Œä¾‹å¦‚è§£å¯†æ•°æ®ã€‚
+				if(isTunnelEstablished()&&buffer.hasRemaining()){//å°†è¯»åˆ°çš„æ•°æ®ï¼Œè½¬å‘ç»™å…„å¼Ÿã€‚
+					m_BrotherTunnel.beforeSend(buffer);//å‘é€ä¹‹å‰ï¼Œå…ˆè®©å­ç±»å¤„ç†ï¼Œä¾‹å¦‚åšåŠ å¯†ç­‰ã€‚
 					if(!m_BrotherTunnel.write(buffer,true)){
-						key.cancel();//ĞÖµÜ³Ô²»Ïû£¬¾ÍÈ¡Ïû¶ÁÈ¡ÊÂ¼ş¡£
+						key.cancel();//å…„å¼Ÿåƒä¸æ¶ˆï¼Œå°±å–æ¶ˆè¯»å–äº‹ä»¶ã€‚
 						if(ProxyConfig.IS_DEBUG)
 							System.out.printf("%s can not read more.\n", m_ServerEP);
 					}
 				} 
 			}else if(bytesRead<0) {
-				this.dispose();//Á¬½ÓÒÑ¹Ø±Õ£¬ÊÍ·Å×ÊÔ´¡£
+				this.dispose();//è¿æ¥å·²å…³é—­ï¼Œé‡Šæ”¾èµ„æºã€‚
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,13 +142,13 @@ public abstract class Tunnel {
 
 	public void onWritable(SelectionKey key){
 		try {
-			this.beforeSend(m_SendRemainBuffer);//·¢ËÍÖ®Ç°£¬ÏÈÈÃ×ÓÀà´¦Àí£¬ÀıÈç×ö¼ÓÃÜµÈ¡£
-			if(this.write(m_SendRemainBuffer, false)) {//Èç¹ûÊ£ÓàÊı¾İÒÑ¾­·¢ËÍÍê±Ï
-				key.cancel();//È¡ÏûĞ´ÊÂ¼ş¡£
+			this.beforeSend(m_SendRemainBuffer);//å‘é€ä¹‹å‰ï¼Œå…ˆè®©å­ç±»å¤„ç†ï¼Œä¾‹å¦‚åšåŠ å¯†ç­‰ã€‚
+			if(this.write(m_SendRemainBuffer, false)) {//å¦‚æœå‰©ä½™æ•°æ®å·²ç»å‘é€å®Œæ¯•
+				key.cancel();//å–æ¶ˆå†™äº‹ä»¶ã€‚
 				if(isTunnelEstablished()){
-					m_BrotherTunnel.beginReceive();//Õâ±ßÊı¾İ·¢ËÍÍê±Ï£¬Í¨ÖªĞÖµÜ¿ÉÒÔÊÕÊı¾İÁË¡£
+					m_BrotherTunnel.beginReceive();//è¿™è¾¹æ•°æ®å‘é€å®Œæ¯•ï¼Œé€šçŸ¥å…„å¼Ÿå¯ä»¥æ”¶æ•°æ®äº†ã€‚
 				}else {
-					this.beginReceive();//¿ªÊ¼½ÓÊÕ´úÀí·şÎñÆ÷ÏìÓ¦Êı¾İ
+					this.beginReceive();//å¼€å§‹æ¥æ”¶ä»£ç†æœåŠ¡å™¨å“åº”æ•°æ®
 				}
 			}
 		} catch (Exception e) {
@@ -171,7 +171,7 @@ public abstract class Tunnel {
 			}
 			
 			if(m_BrotherTunnel!=null&&disposeBrother){
-				m_BrotherTunnel.disposeInternal(false);//°ÑĞÖµÜµÄ×ÊÔ´Ò²ÊÍ·ÅÁË¡£
+				m_BrotherTunnel.disposeInternal(false);//æŠŠå…„å¼Ÿçš„èµ„æºä¹Ÿé‡Šæ”¾äº†ã€‚
 			}
 
 			m_InnerChannel=null;

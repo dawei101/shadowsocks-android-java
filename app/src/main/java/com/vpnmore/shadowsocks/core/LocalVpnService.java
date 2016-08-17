@@ -147,7 +147,7 @@ public class LocalVpnService extends VpnService implements Runnable {
 	String getVersionName()  {
 		 try {
 	           PackageManager packageManager = getPackageManager();
-	           // getPackageName()ÊÇÄãµ±Ç°ÀàµÄ°üÃû£¬0´ú±íÊÇ»ñÈ¡°æ±¾ĞÅÏ¢
+	           // getPackageName()æ˜¯ä½ å½“å‰ç±»çš„åŒ…åï¼Œ0ä»£è¡¨æ˜¯è·å–ç‰ˆæœ¬ä¿¡æ¯
 	           PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),0);
 	           String version = packInfo.versionName;
 	           return version;
@@ -161,15 +161,15 @@ public class LocalVpnService extends VpnService implements Runnable {
 		try {
 			System.out.printf("VPNService(%s) work thread is runing...\n", ID);
  
-			ProxyConfig.AppInstallID=getAppInstallID();//»ñÈ¡°²×°ID
-			ProxyConfig.AppVersion=getVersionName();//»ñÈ¡°æ±¾ºÅ
+			ProxyConfig.AppInstallID=getAppInstallID();//è·å–å®‰è£…ID
+			ProxyConfig.AppVersion=getVersionName();//è·å–ç‰ˆæœ¬å·
 			System.out.printf("AppInstallID: %s\n", ProxyConfig.AppInstallID);
 			writeLog("Android version: %s", Build.VERSION.RELEASE);
 			writeLog("App version: %s", ProxyConfig.AppVersion);
 			
 			
-			ChinaIpMaskManager.loadFromFile(getResources().openRawResource(R.raw.ipmask));//¼ÓÔØÖĞ¹úµÄIP¶Î£¬ÓÃÓÚIP·ÖÁ÷¡£
-			waitUntilPreapred();//¼ì²éÊÇ·ñ×¼±¸Íê±Ï¡£
+			ChinaIpMaskManager.loadFromFile(getResources().openRawResource(R.raw.ipmask));//åŠ è½½ä¸­å›½çš„IPæ®µï¼Œç”¨äºIPåˆ†æµã€‚
+			waitUntilPreapred();//æ£€æŸ¥æ˜¯å¦å‡†å¤‡å®Œæ¯•ã€‚
 
 			writeLog("Load config from file ...");
 			try {
@@ -193,7 +193,7 @@ public class LocalVpnService extends VpnService implements Runnable {
 
 			while (true) {
 				if (IsRunning) {
-					//¼ÓÔØÅäÖÃÎÄ¼ş
+					//åŠ è½½é…ç½®æ–‡ä»¶
 
 					writeLog("set shadowsocks/(http proxy)");
 					try {
@@ -255,7 +255,7 @@ public class LocalVpnService extends VpnService implements Runnable {
 			TCPHeader tcpHeader =m_TCPHeader;
 			tcpHeader.m_Offset=ipHeader.getHeaderLength();
 			if (ipHeader.getSourceIP() == LOCAL_IP) {
-				if (tcpHeader.getSourcePort() == m_TcpProxyServer.Port) {// ÊÕµ½±¾µØTCP·şÎñÆ÷Êı¾İ
+				if (tcpHeader.getSourcePort() == m_TcpProxyServer.Port) {// æ”¶åˆ°æœ¬åœ°TCPæœåŠ¡å™¨æ•°æ®
 					NatSession session =NatSessionManager.getSession(tcpHeader.getDestinationPort());
 					if (session != null) {
 						ipHeader.setSourceIP(ipHeader.getDestinationIP());
@@ -270,7 +270,7 @@ public class LocalVpnService extends VpnService implements Runnable {
 					}
 				} else {
 					
-					// Ìí¼Ó¶Ë¿ÚÓ³Éä
+					// æ·»åŠ ç«¯å£æ˜ å°„
 					int portKey=tcpHeader.getSourcePort();
 					NatSession session=NatSessionManager.getSession(portKey);
 					if(session==null||session.RemoteIP!=ipHeader.getDestinationIP()||session.RemotePort!=tcpHeader.getDestinationPort()){
@@ -278,14 +278,14 @@ public class LocalVpnService extends VpnService implements Runnable {
 					}
 					
 					session.LastNanoTime=System.nanoTime();
-					session.PacketSent++;//×¢ÒâË³Ğò
+					session.PacketSent++;//æ³¨æ„é¡ºåº
 					
 					int tcpDataSize=ipHeader.getDataLength()-tcpHeader.getHeaderLength();
 					if(session.PacketSent==2&&tcpDataSize==0){
-						return;//¶ªÆútcpÎÕÊÖµÄµÚ¶ş¸öACK±¨ÎÄ¡£ÒòÎª¿Í»§¶Ë·¢Êı¾İµÄÊ±ºòÒ²»á´øÉÏACK£¬ÕâÑù¿ÉÒÔÔÚ·şÎñÆ÷AcceptÖ®Ç°·ÖÎö³öHOSTĞÅÏ¢¡£
+						return;//ä¸¢å¼ƒtcpæ¡æ‰‹çš„ç¬¬äºŒä¸ªACKæŠ¥æ–‡ã€‚å› ä¸ºå®¢æˆ·ç«¯å‘æ•°æ®çš„æ—¶å€™ä¹Ÿä¼šå¸¦ä¸ŠACKï¼Œè¿™æ ·å¯ä»¥åœ¨æœåŠ¡å™¨Acceptä¹‹å‰åˆ†æå‡ºHOSTä¿¡æ¯ã€‚
 					}
 					
-					//·ÖÎöÊı¾İ£¬ÕÒµ½host
+					//åˆ†ææ•°æ®ï¼Œæ‰¾åˆ°host
 					if(session.BytesSent==0&&tcpDataSize>10){
 						int dataOffset=tcpHeader.m_Offset+tcpHeader.getHeaderLength();
 						String host=HttpHostHeaderParser.parseHost(tcpHeader.m_Data, dataOffset, tcpDataSize);
@@ -296,20 +296,20 @@ public class LocalVpnService extends VpnService implements Runnable {
 						}
 					}
  
-					// ×ª·¢¸ø±¾µØTCP·şÎñÆ÷
+					// è½¬å‘ç»™æœ¬åœ°TCPæœåŠ¡å™¨
 					ipHeader.setSourceIP(ipHeader.getDestinationIP());
 					ipHeader.setDestinationIP(LOCAL_IP);
 					tcpHeader.setDestinationPort(m_TcpProxyServer.Port);
 
 					CommonMethods.ComputeTCPChecksum(ipHeader, tcpHeader);
 					m_VPNOutputStream.write(ipHeader.m_Data, ipHeader.m_Offset, size);
-					session.BytesSent+=tcpDataSize;//×¢ÒâË³Ğò
+					session.BytesSent+=tcpDataSize;//æ³¨æ„é¡ºåº
 					m_SentBytes+=size;
 				}
 			}
 			break;
 		case IPHeader.UDP:
-			// ×ª·¢DNSÊı¾İ°ü£º
+			// è½¬å‘DNSæ•°æ®åŒ…ï¼š
 			UDPHeader udpHeader =m_UDPHeader;
 			udpHeader.m_Offset=ipHeader.getHeaderLength();
 			if (ipHeader.getSourceIP() == LOCAL_IP && udpHeader.getDestinationPort() == 53) {
@@ -406,17 +406,17 @@ public class LocalVpnService extends VpnService implements Runnable {
 	}
 	
 	private synchronized void dispose() {
-		// ¶Ï¿ªVPN
+		// æ–­å¼€VPN
 		disconnectVPN();
 
-		// Í£Ö¹TcpServer
+		// åœæ­¢TcpServer
 		if (m_TcpProxyServer != null) {
 			m_TcpProxyServer.stop();
 			m_TcpProxyServer = null;
 			writeLog("LocalTcpServer stopped.");
 		}
 
-		// Í£Ö¹DNS½âÎöÆ÷
+		// åœæ­¢DNSè§£æå™¨
 		if (m_DnsProxy != null) {
 			m_DnsProxy.stop();
 			m_DnsProxy = null;

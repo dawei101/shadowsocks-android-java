@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/ChinaIpMaskManager.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/DnsProxy.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/HttpHostHeaderParser.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/LocalVpnService.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/NatSession.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/NatSessionManager.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/ProxyConfig.java" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/TcpProxyServer.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/core/TunnelFactory.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/dns/DnsFlags.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/dns/DnsHeader.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/dns/DnsPacket.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/dns/Question.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/dns/Resource.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/dns/ResourcePointer.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tcpip/CommonMethods.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tcpip/IPHeader.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tcpip/TCPHeader.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tcpip/UDPHeader.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/Config.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/RawTunnel.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/Tunnel.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/httpconnect/HttpConnectConfig.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/httpconnect/HttpConnectTunnel.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/shadowsocks/ShadowsocksConfig.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/tunnel/shadowsocks/ShadowsocksTunnel.java" charset="GB2312" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/vpnmore/shadowsocks/ui/MainActivity.java" charset="GB2312" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
