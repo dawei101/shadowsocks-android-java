@@ -67,13 +67,11 @@ public class CamelliaCrypt extends CryptBase {
 
     @Override
     public int getKeyLength() {
-        if(_name.equals(CIPHER_CAMELLIA_128_CFB)) {
+        if (_name.equals(CIPHER_CAMELLIA_128_CFB)) {
             return 16;
-        }
-        else if (_name.equals(CIPHER_CAMELLIA_192_CFB)) {
+        } else if (_name.equals(CIPHER_CAMELLIA_192_CFB)) {
             return 24;
-        }
-        else if (_name.equals(CIPHER_CAMELLIA_256_CFB)) {
+        } else if (_name.equals(CIPHER_CAMELLIA_256_CFB)) {
             return 32;
         }
 
@@ -87,14 +85,11 @@ public class CamelliaCrypt extends CryptBase {
 
         if (_name.equals(CIPHER_CAMELLIA_128_CFB)) {
             cipher = new CFBBlockCipher(engine, getIVLength() * 8);
-        }
-        else if (_name.equals(CIPHER_CAMELLIA_192_CFB)) {
+        } else if (_name.equals(CIPHER_CAMELLIA_192_CFB)) {
             cipher = new CFBBlockCipher(engine, getIVLength() * 8);
-        }
-        else if (_name.equals(CIPHER_CAMELLIA_256_CFB)) {
+        } else if (_name.equals(CIPHER_CAMELLIA_256_CFB)) {
             cipher = new CFBBlockCipher(engine, getIVLength() * 8);
-        }
-        else {
+        } else {
             throw new InvalidAlgorithmParameterException(_name);
         }
 

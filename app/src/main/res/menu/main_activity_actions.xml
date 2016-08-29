@@ -1,7 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_item_switch" android:showAsAction="always" android:title="@string/menu_item_switch" android:actionViewClass="android.widget.Switch"></item>
+    <item
+        android:id="@+id/menu_item_switch"
+        android:showAsAction="always"
+        android:title="@string/menu_item_switch"
+        android:actionViewClass="android.widget.Switch"></item>
 
-    <item android:id="@+id/menu_item_toggle_global" android:title="@string/menu_item_toggle_global"></item>
-    <item android:id="@+id/menu_item_about" android:title="@string/menu_item_about"></item>
-    <item android:id="@+id/menu_item_exit" android:title="@string/menu_item_exit"></item>
+    <item
+        android:id="@+id/menu_item_toggle_global"
+        android:title="@string/menu_item_toggle_global"></item>
+    <item
+        android:id="@+id/menu_item_about"
+        android:title="@string/menu_item_about"></item>
+    <item
+        android:id="@+id/menu_item_exit"
+        android:title="@string/menu_item_exit"></item>
 </menu>

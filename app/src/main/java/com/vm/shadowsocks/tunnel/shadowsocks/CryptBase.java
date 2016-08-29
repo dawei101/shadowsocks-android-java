@@ -51,8 +51,11 @@ import javax.crypto.SecretKey;
 public abstract class CryptBase implements ICrypt {
 
     protected abstract StreamBlockCipher getCipher(boolean isEncrypted) throws InvalidAlgorithmParameterException;
+
     protected abstract SecretKey getKey();
+
     protected abstract void _encrypt(byte[] data, ByteArrayOutputStream stream);
+
     protected abstract void _decrypt(byte[] data, ByteArrayOutputStream stream);
 
     protected final String _name;
@@ -78,14 +81,12 @@ public abstract class CryptBase implements ICrypt {
         _key = getKey();
     }
 
-    protected void setIV(byte[] iv, boolean isEncrypt)
-    {
+    protected void setIV(byte[] iv, boolean isEncrypt) {
         if (_ivLength == 0) {
             return;
         }
 
-        if (isEncrypt)
-        {
+        if (isEncrypt) {
             _encryptIV = new byte[_ivLength];
             System.arraycopy(iv, 0, _encryptIV, 0, _ivLength);
             try {
@@ -95,9 +96,7 @@ public abstract class CryptBase implements ICrypt {
             } catch (InvalidAlgorithmParameterException e) {
                 logger.info(e.toString());
             }
-        }
-        else
-        {
+        } else {
             _decryptIV = new byte[_ivLength];
             System.arraycopy(iv, 0, _decryptIV, 0, _ivLength);
             try {
@@ -110,13 +109,13 @@ public abstract class CryptBase implements ICrypt {
         }
     }
 
-    public byte[] encrypt(byte[] data){
+    public byte[] encrypt(byte[] data) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         encrypt(data, stream);
         return stream.toByteArray();
     }
 
-    public byte[] decrypt(byte[] data){
+    public byte[] decrypt(byte[] data) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         decrypt(data, stream);
         return stream.toByteArray();

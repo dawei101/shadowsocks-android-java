@@ -73,8 +73,7 @@ public class BlowFishCrypt extends CryptBase {
 
         if (_name.equals(CIPHER_BLOWFISH_CFB)) {
             cipher = new CFBBlockCipher(engine, getIVLength() * 8);
-        }
-        else {
+        } else {
             throw new InvalidAlgorithmParameterException(_name);
         }
 
