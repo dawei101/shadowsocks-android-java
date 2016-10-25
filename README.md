@@ -4,9 +4,9 @@ Last release: [Download](https://github.com/dawei101/shadowsocks-android-java/re
 
 ### 关于 About
 
-本版本为shadowsocks android版的纯java版本
+本版本为shadowsocks android版的纯java版本，可以作为玩具使用。
 
-This version of shadowsocks for android is pure java version
+This version of shadowsocks for android is pure java version，take it as a toy please.
 
 
 代码多整理自 [smartproxy](https://github.com/hedaode/SmartProxy) 和 [shadowsocks-java](https://github.com/blakey22/shadowsocks-java)
