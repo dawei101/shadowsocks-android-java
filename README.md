@@ -4,7 +4,9 @@ Last release: [Download](https://github.com/dawei101/shadowsocks-android-java/re
 
 ### 关于 About
 
-本版本为shadowsocks android版的纯java版本，可以作为玩具使用。
+本版本为shadowsocks android版的纯java版本
+
+因为实现原理的缘故，会牺牲掉很多功能(比如dns解析)，虽然省电，但在速度有明显不足。建议作为玩具使用。
 
 This version of shadowsocks for android is pure java version，take it as a toy please.
 
@@ -56,15 +58,9 @@ camellia-192-cfb
 camellia-256-cfb
 ```
 
-如有问题请及时反馈
-
-If you have any issue, please give a report
-
 ### 兄弟版本 Brother version
 
 ##### [Shadowsocks android(Scala)](https://github.com/shadowsocks/shadowsocks-android)
-
-Scala版对很多开发者有些门槛, 所以本版本是不错的选择.
 
 Scala version is high threshold to lots of developer, so it's a better choice to choose this version.
 
