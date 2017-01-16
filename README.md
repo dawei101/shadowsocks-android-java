@@ -64,6 +64,9 @@ camellia-256-cfb
 
 Scala version is high threshold to lots of developer, so it's a better choice to choose this version.
 
+### 作者同系列版本 
+
+[shadowsocks 桌面版，一份代码完美支持windows，mac osx，linux](https://github.com/dawei101/tongsheClient.shadowsocks-go)
 
 #### LICENSE
 
