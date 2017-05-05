@@ -140,7 +140,7 @@ public class LocalVpnService extends VpnService implements Runnable {
             appInstallID = UUID.randomUUID().toString();
             Editor editor = preferences.edit();
             editor.putString("AppInstallID", appInstallID);
-            editor.commit();
+            editor.apply();
         }
         return appInstallID;
     }
@@ -383,6 +383,22 @@ public class LocalVpnService extends VpnService implements Runnable {
                 if (ProxyConfig.IS_DEBUG)
                     System.out.printf("%s=%s\n", name, value);
             }
+        }
+
+        if (AppProxyManager.isLollipopOrAbove){
+            if (AppProxyManager.Instance.proxyAppInfo.size() == 0){
+                writeLog("Proxy All Apps");
+            }
+            for (AppInfo app : AppProxyManager.Instance.proxyAppInfo){
+                try{
+                    builder.addAllowedApplication(app.getPkgName());
+                    writeLog("Proxy App: " + app.getAppLabel());
+                } catch (Exception e){
+                    writeLog("Proxy App Fail: " + app.getAppLabel());
+                }
+            }
+        } else {
+            writeLog("No Pre-App proxy, due to low Android version.");
         }
 
         Intent intent = new Intent(this, MainActivity.class);

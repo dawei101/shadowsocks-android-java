@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:duplicateParentState="false">
+    <FrameLayout android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ProgressBar android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/list"
+            android:visibility="gone"/>
+        <com.futuremind.recyclerviewfastscroll.FastScroller
+            android:id="@+id/fastscroller"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"
+            app:fastscroll__handleColor="#607D8B"
+            app:fastscroll__bubbleColor="#607D8B"
+            app:fastscroll__bubbleTextAppearance="@style/StyledScrollerTextAppearance"/>
+    </FrameLayout>
+</LinearLayout>

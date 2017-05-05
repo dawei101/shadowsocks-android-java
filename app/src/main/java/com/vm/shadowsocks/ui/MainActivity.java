@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.vm.shadowsocks.R;
+import com.vm.shadowsocks.core.AppInfo;
+import com.vm.shadowsocks.core.AppProxyManager;
 import com.vm.shadowsocks.core.LocalVpnService;
 import com.vm.shadowsocks.core.ProxyConfig;
 
@@ -49,7 +52,7 @@ public class MainActivity extends Activity implements
     private Switch switchProxy;
     private TextView textViewLog;
     private ScrollView scrollViewLog;
-    private TextView textViewProxyUrl;
+    private TextView textViewProxyUrl, textViewProxyApp;
     private Calendar mCalendar;
 
     @Override
@@ -60,6 +63,7 @@ public class MainActivity extends Activity implements
         scrollViewLog = (ScrollView) findViewById(R.id.scrollViewLog);
         textViewLog = (TextView) findViewById(R.id.textViewLog);
         findViewById(R.id.ProxyUrlLayout).setOnClickListener(this);
+        findViewById(R.id.AppSelectLayout).setOnClickListener(this);
 
         textViewProxyUrl = (TextView) findViewById(R.id.textViewProxyUrl);
         String ProxyUrl = readProxyUrl();
@@ -74,6 +78,15 @@ public class MainActivity extends Activity implements
 
         mCalendar = Calendar.getInstance();
         LocalVpnService.addOnStatusChangedListener(this);
+
+        //Pre-App Proxy
+        if (AppProxyManager.isLollipopOrAbove){
+            new AppProxyManager(this);
+            textViewProxyApp = (TextView) findViewById(R.id.textViewAppSelectDetail);
+        } else {
+            ((ViewGroup) findViewById(R.id.AppSelectLayout).getParent()).removeView(findViewById(R.id.AppSelectLayout));
+            ((ViewGroup) findViewById(R.id.textViewAppSelectLine).getParent()).removeView(findViewById(R.id.textViewAppSelectLine));
+        }
     }
 
     String readProxyUrl() {
@@ -85,7 +98,7 @@ public class MainActivity extends Activity implements
         SharedPreferences preferences = getSharedPreferences("shadowsocksProxyUrl", MODE_PRIVATE);
         Editor editor = preferences.edit();
         editor.putString(CONFIG_URL_KEY, ProxyUrl);
-        editor.commit();
+        editor.apply();
     }
 
     String getVersionName() {
@@ -129,25 +142,30 @@ public class MainActivity extends Activity implements
             return;
         }
 
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.config_url)
-                .setItems(new CharSequence[]{
-                        getString(R.string.config_url_scan),
-                        getString(R.string.config_url_manual)
-                }, new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i) {
-                            case 0:
-                                scanForProxyUrl();
-                                break;
-                            case 1:
-                                showProxyUrlInputDialog();
-                                break;
+        if (v.getTag().toString().equals("ProxyUrl")){
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.config_url)
+                    .setItems(new CharSequence[]{
+                            getString(R.string.config_url_scan),
+                            getString(R.string.config_url_manual)
+                    }, new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            switch (i) {
+                                case 0:
+                                    scanForProxyUrl();
+                                    break;
+                                case 1:
+                                    showProxyUrlInputDialog();
+                                    break;
+                            }
                         }
-                    }
-                })
-                .show();
+                    })
+                    .show();
+        } else if (v.getTag().toString().equals("AppSelect")){
+            System.out.println("abc");
+            startActivity(new Intent(this, AppManager.class));
+        }
     }
 
     private void scanForProxyUrl() {
@@ -349,6 +367,20 @@ public class MainActivity extends Activity implements
                 }
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AppProxyManager.isLollipopOrAbove) {
+            if (AppProxyManager.Instance.proxyAppInfo.size() != 0) {
+                String tmpString = "";
+                for (AppInfo app : AppProxyManager.Instance.proxyAppInfo) {
+                    tmpString += app.getAppLabel() + ", ";
+                }
+                textViewProxyApp.setText(tmpString);
+            }
         }
     }
 
