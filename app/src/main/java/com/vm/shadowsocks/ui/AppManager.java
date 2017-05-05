@@ -123,7 +123,8 @@ public class AppManager extends Activity{
                 appInfo.setAppLabel(appLabel);
                 appInfo.setPkgName(pkgName);
                 appInfo.setAppIcon(icon);
-                AppProxyManager.Instance.mlistAppInfo.add(appInfo);
+                if (!appInfo.getPkgName().equals("com.vm.shadowsocks"))//App本身会强制加入代理列表
+                    AppProxyManager.Instance.mlistAppInfo.add(appInfo);
             }
         }
     }
