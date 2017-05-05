@@ -379,7 +379,10 @@ public class LocalVpnService extends VpnService implements Runnable {
             String value = (String) method.invoke(null, name);
             if (value != null && !"".equals(value) && !servers.contains(value)) {
                 servers.add(value);
-                builder.addRoute(value, 32);
+                if (value.replaceAll("\\d", "").length() == 3){//防止IPv6地址导致问题
+                    System.out.println(value);
+                    builder.addRoute(value, 32);
+                }
                 if (ProxyConfig.IS_DEBUG)
                     System.out.printf("%s=%s\n", name, value);
             }
