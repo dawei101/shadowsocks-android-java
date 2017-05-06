@@ -140,7 +140,7 @@ public class LocalVpnService extends VpnService implements Runnable {
             appInstallID = UUID.randomUUID().toString();
             Editor editor = preferences.edit();
             editor.putString("AppInstallID", appInstallID);
-            editor.commit();
+            editor.apply();
         }
         return appInstallID;
     }
@@ -379,10 +379,32 @@ public class LocalVpnService extends VpnService implements Runnable {
             String value = (String) method.invoke(null, name);
             if (value != null && !"".equals(value) && !servers.contains(value)) {
                 servers.add(value);
-                builder.addRoute(value, 32);
+                if (value.replaceAll("\\d", "").length() == 3){//防止IPv6地址导致问题
+                    builder.addRoute(value, 32);
+                } else {
+                    builder.addRoute(value, 128);
+                }
                 if (ProxyConfig.IS_DEBUG)
                     System.out.printf("%s=%s\n", name, value);
             }
+        }
+
+        if (AppProxyManager.isLollipopOrAbove){
+            if (AppProxyManager.Instance.proxyAppInfo.size() == 0){
+                writeLog("Proxy All Apps");
+            }
+            for (AppInfo app : AppProxyManager.Instance.proxyAppInfo){
+                builder.addAllowedApplication("com.vm.shadowsocks");//需要把自己加入代理，不然会无法进行网络连接
+                try{
+                    builder.addAllowedApplication(app.getPkgName());
+                    writeLog("Proxy App: " + app.getAppLabel());
+                } catch (Exception e){
+                    e.printStackTrace();
+                    writeLog("Proxy App Fail: " + app.getAppLabel());
+                }
+            }
+        } else {
+            writeLog("No Pre-App proxy, due to low Android version.");
         }
 
         Intent intent = new Intent(this, MainActivity.class);

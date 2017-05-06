@@ -22,6 +22,12 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.vm.shadowsocks.ui.AppManager"
+            android:label="@string/proxied_apps"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"/>
+
         <service
             android:name="com.vm.shadowsocks.core.LocalVpnService"
             android:permission="android.permission.BIND_VPN_SERVICE">

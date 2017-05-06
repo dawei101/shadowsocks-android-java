@@ -10,6 +10,9 @@
     <string name="config_url_scan">扫描二维码</string>
     <string name="config_url_manual">手动输入</string>
     <string name="config_url_scan_hint">扫描配置地址的二维码</string>
+    <string name="select_app">选择使用代理的软件</string>
+    <string name="select_app_detail">未选择</string>
+    <string name="proxied_apps">使用代理的软件</string>
     <string name="btn_ok">确定</string>
     <string name="btn_cancel">取消</string>
     <string name="btn_more">更多&#8230;</string>
