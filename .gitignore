@@ -2,6 +2,7 @@
 *.apk
 *.ap_
 
+
 # Files for the ART/Dalvik VM
 *.dex
 
@@ -103,3 +104,5 @@ $RECYCLE.BIN/
 
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
+
+.idea/
