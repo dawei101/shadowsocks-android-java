@@ -6,9 +6,8 @@ Last release: [Download](https://github.com/dawei101/shadowsocks-android-java/re
 
 本版本为shadowsocks android版的纯java版本
 
-因为实现原理的缘故，会牺牲掉很多功能(比如dns解析)，虽然省电，但在速度有明显不足。建议作为玩具使用。
-
-This version of shadowsocks for android is pure java version，take it as a toy please.
+因为实现原理的缘故，会牺牲掉很多功能(比如dns解析).
+This version of shadowsocks for android is pure java version.
 
 
 代码多整理自 [smartproxy](https://github.com/hedaode/SmartProxy) 和 [shadowsocks-java](https://github.com/blakey22/shadowsocks-java)
@@ -33,11 +32,11 @@ ss://base64encode(method:password@host:port)
 
 And also it inherited the support of http(s) proxy from Smartproxy , Set the url as stardand http(s) proxy format when use it. 
 
-http(s)代理格式
+http代理格式
 
-http(s)proxy foramt:
+http proxy foramt:
 ```
-http(s)://(username:passsword)@host:port
+http://(username:passsword)@host:port
 ```
 
 支持的加密类型：
@@ -56,6 +55,9 @@ aes-256-ofb
 camellia-128-cfb
 camellia-192-cfb
 camellia-256-cfb
+chacha20
+chacha20-ietf
+rc4-md5
 ```
 
 ### 兄弟版本 Brother version

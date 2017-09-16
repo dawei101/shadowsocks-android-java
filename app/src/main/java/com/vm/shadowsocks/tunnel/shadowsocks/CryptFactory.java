@@ -48,6 +48,8 @@ public class CryptFactory {
         putAll(CamelliaCrypt.getCiphers());
         putAll(BlowFishCrypt.getCiphers());
         putAll(SeedCrypt.getCiphers());
+        putAll(Chacha20Crypt.getCiphers());
+        putAll(Rc4Md5Crypt.getCiphers());
         // TODO: other crypts
     }};
     private static Logger logger = Logger.getLogger(CryptFactory.class.getName());
