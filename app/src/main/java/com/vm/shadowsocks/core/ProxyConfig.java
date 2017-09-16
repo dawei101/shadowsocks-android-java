@@ -33,7 +33,7 @@ public class ProxyConfig {
     public static String AppInstallID;
     public static String AppVersion;
     public final static int FAKE_NETWORK_MASK = CommonMethods.ipStringToInt("255.255.0.0");
-    public final static int FAKE_NETWORK_IP = CommonMethods.ipStringToInt("10.231.0.0");
+    public final static int FAKE_NETWORK_IP = CommonMethods.ipStringToInt("172.25.0.0");
 
     ArrayList<IPAddress> m_IpList;
     ArrayList<IPAddress> m_DnsList;
