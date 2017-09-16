@@ -246,7 +246,7 @@ public class LocalVpnService extends VpnService implements Runnable {
                 }
                 onIPPacketReceived(m_IPHeader, size);
             }
-            Thread.sleep(100);
+            Thread.sleep(20);
         }
         in.close();
         disconnectVPN();
