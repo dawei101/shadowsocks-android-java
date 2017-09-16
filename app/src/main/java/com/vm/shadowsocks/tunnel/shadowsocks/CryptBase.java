@@ -31,13 +31,15 @@
 
 package com.vm.shadowsocks.tunnel.shadowsocks;
 
-import org.bouncycastle.crypto.StreamBlockCipher;
+import org.bouncycastle.crypto.CipherParameters;
+import org.bouncycastle.crypto.StreamCipher;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -50,13 +52,19 @@ import javax.crypto.SecretKey;
  */
 public abstract class CryptBase implements ICrypt {
 
-    protected abstract StreamBlockCipher getCipher(boolean isEncrypted) throws InvalidAlgorithmParameterException;
+    protected abstract StreamCipher getCipher(boolean isEncrypted) throws InvalidAlgorithmParameterException;
 
     protected abstract SecretKey getKey();
 
     protected abstract void _encrypt(byte[] data, ByteArrayOutputStream stream);
 
     protected abstract void _decrypt(byte[] data, ByteArrayOutputStream stream);
+
+    protected CipherParameters getCipherParameters(byte[] iv){
+        _decryptIV = new byte[_ivLength];
+        System.arraycopy(iv, 0, _decryptIV, 0, _ivLength);
+        return new ParametersWithIV(new KeyParameter(_key.getEncoded()), _decryptIV);
+    }
 
     protected final String _name;
     protected final SecretKey _key;
@@ -69,8 +77,8 @@ public abstract class CryptBase implements ICrypt {
     protected byte[] _decryptIV;
     protected final Lock encLock = new ReentrantLock();
     protected final Lock decLock = new ReentrantLock();
-    protected StreamBlockCipher encCipher;
-    protected StreamBlockCipher decCipher;
+    protected StreamCipher encCipher;
+    protected StreamCipher decCipher;
     private Logger logger = Logger.getLogger(CryptBase.class.getName());
 
     public CryptBase(String name, String password) {
@@ -86,26 +94,26 @@ public abstract class CryptBase implements ICrypt {
             return;
         }
 
+        CipherParameters cipherParameters = null;
+
         if (isEncrypt) {
-            _encryptIV = new byte[_ivLength];
-            System.arraycopy(iv, 0, _encryptIV, 0, _ivLength);
+            cipherParameters = getCipherParameters(iv);
             try {
                 encCipher = getCipher(isEncrypt);
-                ParametersWithIV parameterIV = new ParametersWithIV(new KeyParameter(_key.getEncoded()), _encryptIV);
-                encCipher.init(isEncrypt, parameterIV);
             } catch (InvalidAlgorithmParameterException e) {
                 logger.info(e.toString());
             }
+            encCipher.init(isEncrypt, cipherParameters);
         } else {
             _decryptIV = new byte[_ivLength];
             System.arraycopy(iv, 0, _decryptIV, 0, _ivLength);
+            cipherParameters = getCipherParameters(iv);
             try {
                 decCipher = getCipher(isEncrypt);
-                ParametersWithIV parameterIV = new ParametersWithIV(new KeyParameter(_key.getEncoded()), _decryptIV);
-                decCipher.init(isEncrypt, parameterIV);
             } catch (InvalidAlgorithmParameterException e) {
                 logger.info(e.toString());
             }
+            decCipher.init(isEncrypt, cipherParameters);
         }
     }
 
@@ -173,5 +181,15 @@ public abstract class CryptBase implements ICrypt {
         byte[] d = new byte[length];
         System.arraycopy(data, 0, d, 0, length);
         decrypt(d, stream);
+    }
+
+
+    public static byte[] md5Digest(byte[] input) {
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            return md5.digest(input);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
