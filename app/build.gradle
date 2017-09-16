@@ -11,16 +11,16 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "com.vm.shadowsocks"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
-        versionName "1.1"
+        versionName "1.2"
     }
     buildTypes {
         release {
@@ -40,6 +40,7 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
     testCompile 'junit:junit:4.12'
 
     compile 'com.embarkmobile:zxing-android-minimal:2.0.0@aar'
