@@ -170,7 +170,6 @@ public class MainActivity extends Activity implements
 
     private void scanForProxyUrl() {
         new IntentIntegrator(this)
-                .setResultDisplayDuration(0)
                 .setPrompt(getString(R.string.config_url_scan_hint))
                 .initiateScan(IntentIntegrator.QR_CODE_TYPES);
     }

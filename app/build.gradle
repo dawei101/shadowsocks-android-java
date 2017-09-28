@@ -24,17 +24,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-}
-
-repositories {
-    mavenCentral()
-
-    maven {
-        url "https://raw.github.com/embarkmobile/zxing-android-minimal/mvn-repo/maven-repository/"
     }
 }
 
@@ -43,8 +35,7 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 
-    compile 'com.embarkmobile:zxing-android-minimal:2.0.0@aar'
-    compile 'com.embarkmobile:zxing-android-integration:2.0.0@aar'
+    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.google.zxing:core:3.0.1'
 
     compile 'org.bouncycastle:bcprov-jdk15on:1.57'
