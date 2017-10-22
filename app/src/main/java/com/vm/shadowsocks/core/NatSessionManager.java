@@ -11,6 +11,10 @@ public class NatSessionManager {
     static final SparseArray<NatSession> Sessions = new SparseArray<NatSession>();
 
     public static NatSession getSession(int portKey) {
+        NatSession session = Sessions.get(portKey);
+        if (session!=null) {
+            session.LastNanoTime = System.nanoTime();
+        }
         return Sessions.get(portKey);
     }
 
